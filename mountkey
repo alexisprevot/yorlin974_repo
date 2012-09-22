@@ -1,0 +1,37 @@
+#Par Yorlin974
+#Ce script vous aideras à monter une clé USB
+#!/bin/sh
+#couleur
+vert="\\033[1;32m"
+normal="\\033[0;39m"
+bleu="\\033[1;34m"
+rouge="\\033[1;31m"
+#verifie si dossier existe
+DIRECTORY=/media/usbkey
+if [ ! -d "$DIRECTORY" ];
+then
+  sudo mkdir /media/usbkey
+fi
+
+timeout 1 tail -f /var/log/messages
+
+#demande info
+echo -e -n "$vert"sda,sda1...?:
+
+#lecture
+read entre 
+
+#execute commande
+sudo mount -t vfat -o rw /dev/"$entre" /media/usbkey
+#detecte erreur
+if [ $? -gt 0 ];
+then
+    echo -e "$rouge""Erreur !"
+    exit 1
+fi
+#information fin
+echo -e "$normal"Terminé
+echo -e "$vert"Votre clé usb est accessible dans le dossier: "$bleu"/media/usbkey
+echo -e "$vert"Pour éjecter votre clé usb utiliser la cmande: "$bleu"sudo umount /media/usbkey
+
+exit 0
