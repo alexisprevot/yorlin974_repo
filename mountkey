@@ -22,11 +22,11 @@ echo -e -n "$vert"sda,sda1...?:
 read entre 
 
 #execute commande
-sudo mount -t vfat -o rw /dev/"$entre" /media/usbkey
+echo "your_password" | sudo -S mount -t vfat -o rw /dev/"$entre" /media/usbkey
 #detecte erreur
 if [ $? -gt 0 ];
 then
-    echo -e "$rouge""Erreur !"
+    echo -e "$rouge""[warn] Une erreur est survenu lors du montage de la clé usb."
     exit 1
 fi
 #information fin
